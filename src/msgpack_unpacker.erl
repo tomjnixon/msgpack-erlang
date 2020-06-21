@@ -38,11 +38,11 @@ unpack_stream(<<16#C3, Rest/binary>>, _) ->
 
 %% Raw bytes
 unpack_stream(<<16#C4, L:8/big-unsigned-integer-unit:1, V:L/binary, Rest/binary>>, Opt) ->
-    {maybe_bin(V, Opt), Rest};
+    {maybe_tagged_bin(V, Opt), Rest};
 unpack_stream(<<16#C5, L:16/big-unsigned-integer-unit:1, V:L/binary, Rest/binary>>, Opt) ->
-    {maybe_bin(V, Opt), Rest};
+    {maybe_tagged_bin(V, Opt), Rest};
 unpack_stream(<<16#C6, L:32/big-unsigned-integer-unit:1, V:L/binary, Rest/binary>>, Opt) ->
-    {maybe_bin(V, Opt), Rest};
+    {maybe_tagged_bin(V, Opt), Rest};
 
 %% Floats
 unpack_stream(<<16#CA, V:32/float-unit:1, Rest/binary>>, _) ->
@@ -236,6 +236,12 @@ unpack_str_or_raw(V, ?OPTION{spec=new,
          as_list -> unpack_str(V);
          as_tagged_list -> {string, unpack_str(V)}
      end, Rest}.
+
+maybe_tagged_bin(Bin, ?OPTION{unpack_binary=as_tagged_binary}=Opt) ->
+    {bin, maybe_bin(Bin, Opt)};
+
+maybe_tagged_bin(Bin, ?OPTION{unpack_binary=as_binary}=Opt) ->
+    maybe_bin(Bin, Opt).
 
 maybe_bin(Bin, ?OPTION{known_atoms=Known}) when Known=/=[] ->
     case lists:member(Bin,Known) of

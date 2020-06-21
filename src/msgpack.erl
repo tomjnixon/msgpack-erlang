@@ -176,6 +176,14 @@ parse_options([{pack_str, From}|T], Opt)
   when From =:= from_binary orelse From =:= from_list orelse From =:= from_tagged_list orelse From =:= none ->
     parse_options(T, Opt?OPTION{pack_str=From});
 
+parse_options([{pack_binary, From}|T], Opt)
+  when From =:= from_binary orelse From =:= from_tagged_binary ->
+    parse_options(T, Opt?OPTION{pack_binary=From});
+
+parse_options([{unpack_binary, From}|T], Opt)
+  when From =:= as_binary orelse From =:= as_tagged_binary ->
+    parse_options(T, Opt?OPTION{unpack_binary=From});
+
 parse_options([{map_format,Type}|T], Opt0)
   when Type =:= jsx; Type =:= jiffy; Type =:= map ->
     Opt = Opt0?OPTION{map_format=Type,

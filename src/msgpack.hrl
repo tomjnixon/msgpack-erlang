@@ -40,6 +40,8 @@
           unpack_str = as_list :: as_binary | as_list | as_tagged_list,
           validate_string = false :: boolean(),
           pack_str = from_list :: from_binary | from_list | from_tagged_list | none,
+          pack_binary = from_binary :: from_binary | from_tagged_binary,
+          unpack_binary = as_binary :: as_binary | as_tagged_binary,
           map_format = ?DEFAULT_MAP_FORMAT :: format_type(),
           map_unpack_fun = ?DEFAULT_MAP_UNPACKER_FUN :: msgpack_map_unpacker(),
           ext_packer = undefined   :: msgpack:ext_packer()   | undefined,
