@@ -55,6 +55,8 @@
          {unpack_str, as_binary|as_list|as_tagged_list} |
          {validate_string, boolean()} |
          {pack_str, from_binary|from_list|from_tagged_list|none} |
+         {unpack_binary, as_binary|as_tagged_binary} |
+         {pack_binary, from_binary|from_tagged_binary} |
          {map_format, map|jiffy|jsx} |
          {ext, {msgpack:ext_packer(), msgpack:ext_unpacker()} | module()}].
 
